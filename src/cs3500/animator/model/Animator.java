@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
+import sun.security.util.Length;
 
 /**
  * Represents an animation as a set of Instructions acting upon a set of Shapes.
  */
 public class Animator implements IAnimator {
   // The set of instructions indexed by the shape they act upon.
+  // List of instructions is always chronological.
   Map<IShape, List<Instruction>> instructions;
 
   /**
@@ -82,8 +84,18 @@ public class Animator implements IAnimator {
   @Override
   public void addInstruction(IShape mod, Instruction newInst) {
     if (this.instructions.containsKey(mod)) {
-      this.instructions.get(mod).add(newInst);
-      // TODO: Check for collision
+      int insertionTime = newInst.getDescription()[0];
+      List<Instruction> l = instructions.get(mod);
+      for (int i = 0; i < l.size(); i++) {
+        int curTick = l.get(i).getDescription()[0];
+        if (insertionTime == curTick) {
+          throw new IllegalAccessError("Instruction already exists at that tick");
+        } else if (insertionTime < curTick) {
+          l.add(i, newInst);
+          return;
+        }
+      }
+      l.add(newInst);
     } else {
       throw new IllegalArgumentException("Shape not found");
     }
@@ -96,8 +108,40 @@ public class Animator implements IAnimator {
 
   @Override
   public int[] getDescriptionAt(IShape shape, int tick) {
-    // TODO Auto-generated method stub
-    return null;
+    // Find the instructions before and after the tick
+    // Calculate the correct value
+    int[] before = null;
+    int[] after = null;
+    List<Instruction> l = instructions.get(shape);
+
+    if (tick < l.get(0).getDescription()[0]) {
+      throw new IllegalArgumentException(
+          "Shape does not exist yet at " + l.get(0).getDescription()[0]);
+    }
+
+    for (int i = 0; i < l.size(); i++) {
+      int[] check = l.get(i).getDescription();
+      if (check[0] > tick) {
+        before = l.get(i - 1).getDescription();
+        after = check;
+      } else if (check[0] == tick) {
+        return check;
+      }
+    }
+
+    // If the tick is greater than the last instruction
+    if (after == null) {
+      throw new IllegalArgumentException("Time " + tick + " greater than animation length");
+    }
+
+    int tickDif = after[0] - before[0];
+    int tickElapse = tick - before[0];
+    int[] toReturn = new int[8];
+    for (int i = 0; i < 8; i++) {
+      toReturn[i] = before[i] + (after[i] - before[i]) / tickDif * tickElapse;
+    }
+
+    return toReturn;
   }
 
   @Override

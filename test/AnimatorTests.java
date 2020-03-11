@@ -11,7 +11,7 @@ import cs3500.animator.shapes.Rectangle;
  * Test class for Animator.
  */
 public class AnimatorTests {
-  // TODO: Convert from Instruction tests to animator tests
+  // TODO: Test adding to animator, test full description more, test exceptional cases
   @Test
   public void testGetDescriptionAtOneInstruction() {
     IAnimator anim = new Animator();
@@ -39,7 +39,7 @@ public class AnimatorTests {
 
     int[] expected = new int[] {5, 250, 250, 200, 200, 200, 20, 20};
     for (int i = 0; i < 8; i++) {
-      assertEquals(expected[i], anim.getDescriptionAt(shape, 0)[i]);
+      assertEquals(expected[i], anim.getDescriptionAt(shape, 5)[i]);
     }
   }
 
@@ -56,7 +56,7 @@ public class AnimatorTests {
 
     int[] expected = new int[] {3, 230, 230, 160, 160, 222, 12, 12};
     for (int i = 0; i < 8; i++) {
-      assertEquals(expected[i], anim.getDescriptionAt(shape, 0)[i]);
+      assertEquals(expected[i], anim.getDescriptionAt(shape, 3)[i]);
     }
   }
 
@@ -80,8 +80,8 @@ public class AnimatorTests {
     int[] expected1 = new int[] {3, 230, 230, 160, 160, 222, 12, 12};
     int[] expected2 = new int[] {7, 73, 6, 51, 26, 30, 170, 35};
     for (int i = 0; i < 8; i++) {
-      assertEquals(expected1[i], anim.getDescriptionAt(rect, 0)[i]);
-      assertEquals(expected2[i], anim.getDescriptionAt(ell, 0)[i]);
+      assertEquals(expected1[i], anim.getDescriptionAt(rect, 3)[i]);
+      assertEquals(expected2[i], anim.getDescriptionAt(ell, 7)[i]);
     }
   }
 
