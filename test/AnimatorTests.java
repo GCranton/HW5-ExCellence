@@ -125,4 +125,26 @@ public class AnimatorTests {
         anim.description());
 
   }
+
+  @Test
+  public void testInstructionOrdering() {
+    IAnimator anim = new Animator();
+    IShape shape = new Rectangle("R");
+    Instruction first = new Instruction(new int[] {0, 200, 200, 100, 100, 255, 0, 0});
+    Instruction second = new Instruction(new int[] {5, 250, 250, 200, 200, 200, 20, 20});
+    Instruction third = new Instruction(new int[] {7, 300, 200, 20, 30, 50, 10, 200});
+    Instruction fourth = new Instruction(new int[] {20, 10, 100, 100, 40, 50, 40, 200});
+
+    anim.addShape(shape);
+    anim.addInstruction(shape, third);
+    anim.addInstruction(shape, first);
+    anim.addInstruction(shape, fourth);
+    anim.addInstruction(shape, second);
+    assertEquals(
+        "shape R Rectangle\n"
+            + "motion R 0   200 200 100 100 255 0   0      5   250 250 200 200 200 20  20 \n"
+            + "motion R 5   250 250 200 200 200 20  20     7   300 200 20  30  50  10  200\n"
+            + "motion R 7   300 200 20  30  50  10  200    20  10  100 100 40  50  40  200",
+        anim.description());
+  }
 }
