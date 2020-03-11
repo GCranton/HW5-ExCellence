@@ -118,16 +118,16 @@ public class AnimatorTests {
     anim.addInstruction(ell, eFirst);
     anim.addInstruction(ell, eSecond);
     assertEquals(
-        "shape E Ellipse\n"
-            + "motion E 0   10  20  30  40  100 100 0      10  100 0   60  20  0   200 50 \n"
-            + "shape R Rectangle\n"
-            + "motion R 0   200 200 100 100 255 0   0      5   250 250 200 200 200 20  20 ",
+        "shape R Rectangle\n"
+            + "motion R 0   200 200 100 100 255 0   0      5   250 250 200 200 200 20  20 \n"
+            + "shape E Ellipse\n"
+            + "motion E 0   10  20  30  40  100 100 0      10  100 0   60  20  0   200 50 ",
         anim.description());
 
   }
 
   @Test
-  public void testInstructionOrdering() {
+  public void testAddInstructionOrdering() {
     IAnimator anim = new Animator();
     IShape shape = new Rectangle("R");
     Instruction first = new Instruction(new int[] {0, 200, 200, 100, 100, 255, 0, 0});
@@ -146,5 +146,28 @@ public class AnimatorTests {
             + "motion R 5   250 250 200 200 200 20  20     7   300 200 20  30  50  10  200\n"
             + "motion R 7   300 200 20  30  50  10  200    20  10  100 100 40  50  40  200",
         anim.description());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAddInstructionCollision() {
+    IAnimator anim = new Animator();
+    IShape shape = new Rectangle("R");
+    Instruction first = new Instruction(new int[] {5, 200, 200, 100, 100, 255, 0, 0});
+    Instruction second = new Instruction(new int[] {5, 250, 250, 200, 200, 200, 20, 20});
+
+    anim.addShape(shape);
+    anim.addInstruction(shape, first);
+    anim.addInstruction(shape, second);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testNoShapeError() {
+    IAnimator anim = new Animator();
+    IShape shape = new Rectangle("R");
+    Instruction first = new Instruction(new int[] {0, 200, 200, 100, 100, 255, 0, 0});
+    Instruction second = new Instruction(new int[] {5, 250, 250, 200, 200, 200, 20, 20});
+
+    anim.addInstruction(shape, first);
+    anim.addInstruction(shape, second);
   }
 }

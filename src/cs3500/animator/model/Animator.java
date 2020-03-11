@@ -2,8 +2,10 @@ package cs3500.animator.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
 import sun.security.util.Length;
@@ -38,7 +40,7 @@ public class Animator implements IAnimator {
    * Creates an empty Animator.
    */
   public Animator() {
-    this.instructions = new HashMap<IShape, List<Instruction>>();
+    this.instructions = new LinkedHashMap<IShape, List<Instruction>>();
   }
 
   @Override
@@ -92,7 +94,7 @@ public class Animator implements IAnimator {
       for (int i = 0; i < l.size(); i++) {
         int curTick = l.get(i).getDescription()[0];
         if (insertionTime == curTick) {
-          throw new IllegalAccessError("Instruction already exists at that tick");
+          throw new IllegalArgumentException("Instruction already exists at that tick");
         } else if (insertionTime < curTick) {
           l.add(i, newInst);
           return;
