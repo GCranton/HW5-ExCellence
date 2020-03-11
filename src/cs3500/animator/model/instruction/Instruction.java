@@ -38,6 +38,9 @@ public class Instruction {
   }
 
   private void checkDescriptionValid(int[] description) {
+    if (description.length != 8) {
+      throw new IllegalArgumentException("Missing Values");
+    }
     if (description[0] < 0) {
       throw new IllegalArgumentException("Tick can't be negative.");
     }

@@ -45,6 +45,9 @@ public class Animator implements IAnimator {
   public String description() {
     String description = "";
     for (IShape s : this.instructions.keySet()) {
+      if (description.length() != 0) {
+        description += "\n";
+      }
       description += "shape " + s.getName() + " " + s.getType();
       description += instructionBlockString(s);
     }
@@ -68,7 +71,7 @@ public class Animator implements IAnimator {
   private String descriptionStringAddition(int[] described) {
     String s = "";
     for (int i = 0; i < described.length; i++) {
-      s += String.format("%-2d", described[i]);
+      s += String.format("%-3d", described[i]);
       if (i != described.length - 1) {
         s += " ";
       }
@@ -153,44 +156,4 @@ public class Animator implements IAnimator {
     }
 
   }
-
-  // /**
-  // * Get the given shape parameter at the requested time.
-  // *
-  // * @param tick the time within the time window of the Instruction.
-  // * @param paramIndex which parameter to access.
-  // * @return the value of the parameter at the given time.
-  // */
-  // public int getParameterAt(int tick, int paramIndex) {
-  // // TODO: Finish this implementation, using either the switch or a general implementation.
-  // switch (paramIndex) {
-  // case 0:
-  // // Access the tick @ tick
-  // break;
-  // case 1:
-  // // Access the position x
-  // break;
-  // case 2:
-  // // Access the position y
-  // break;
-  // case 3:
-  // // Access the shape w
-  // break;
-  // case 4:
-  // // Access the shape h
-  // break;
-  // case 5:
-  // // Access the color r
-  // break;
-  // case 6:
-  // // Access the color g
-  // break;
-  // case 7:
-  // // Access the color b
-  // break;
-  // default:
-  // throw new IllegalArgumentException("Access index is out of bounds");
-  // }
-  // return 0;
-  // }
 }

@@ -97,7 +97,32 @@ public class AnimatorTests {
     anim.addInstruction(shape, second);
     assertEquals(
         "shape R Rectangle\n"
-            + "motion R 0  200 200 100 100 255 0  0     5  250 250 200 200 200 20 20",
+            + "motion R 0   200 200 100 100 255 0   0      5   250 250 200 200 200 20  20 ",
         anim.description());
+  }
+
+  @Test
+  public void testDescriptionTwoShapes() {
+    IAnimator anim = new Animator();
+    IShape rect = new Rectangle("R");
+    IShape ell = new Ellipse("E");
+    Instruction rFirst = new Instruction(new int[] {0, 200, 200, 100, 100, 255, 0, 0});
+    Instruction rSecond = new Instruction(new int[] {5, 250, 250, 200, 200, 200, 20, 20});
+    Instruction eFirst = new Instruction(new int[] {0, 10, 20, 30, 40, 100, 100, 0});
+    Instruction eSecond = new Instruction(new int[] {10, 100, 0, 60, 20, 0, 200, 50});
+
+    anim.addShape(rect);
+    anim.addInstruction(rect, rFirst);
+    anim.addInstruction(rect, rSecond);
+    anim.addShape(ell);
+    anim.addInstruction(ell, eFirst);
+    anim.addInstruction(ell, eSecond);
+    assertEquals(
+        "shape E Ellipse\n"
+            + "motion E 0   10  20  30  40  100 100 0      10  100 0   60  20  0   200 50 \n"
+            + "shape R Rectangle\n"
+            + "motion R 0   200 200 100 100 255 0   0      5   250 250 200 200 200 20  20 ",
+        anim.description());
+
   }
 }
