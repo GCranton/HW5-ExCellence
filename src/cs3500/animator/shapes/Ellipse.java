@@ -6,7 +6,7 @@ package cs3500.animator.shapes;
 public class Ellipse extends AShape {
 
   /**
-   * Constructs a new Ellipse
+   * Constructs a new Ellipse.
    * 
    * @param name the name of the Ellipse.
    */

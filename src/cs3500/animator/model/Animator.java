@@ -1,14 +1,11 @@
 package cs3500.animator.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
-import sun.security.util.Length;
 
 /**
  * Represents an animation as a set of Instructions acting upon a set of Shapes.
