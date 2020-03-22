@@ -155,4 +155,22 @@ public class Animator implements IAnimator {
     }
 
   }
+
+  @Override
+  public List<IShape> getShapes() {
+    ArrayList<IShape> toReturn = new ArrayList<IShape>();
+    for (IShape shape : instructions.keySet()) {
+      toReturn.add(shape);
+    }
+    return toReturn;
+  }
+
+  @Override
+  public List<Instruction> getInstructions(IShape shape) {
+    ArrayList<Instruction> toReturn = new ArrayList<Instruction>();
+    for (Instruction i : instructions.get(shape)) {
+      toReturn.add(i);
+    }
+    return toReturn;
+  }
 }

@@ -1,5 +1,6 @@
 package cs3500.animator.model;
 
+import java.util.List;
 import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
 
@@ -69,4 +70,19 @@ public interface IAnimator {
    * @param index the index of the Instruction to remove.
    */
   public void removeInstruction(IShape mod, int index);
+
+  /**
+   * Gets the list of shapes in the animation.
+   * 
+   * @return the list of shape objects.
+   */
+  public List<IShape> getShapes();
+
+  /**
+   * Gets the list of instructions for the given shape.
+   * 
+   * @param shape the shape to get the instructions for.
+   * @return the list of instructions.
+   */
+  public List<Instruction> getInstructions(IShape shape);
 }
