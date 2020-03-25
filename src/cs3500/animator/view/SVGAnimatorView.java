@@ -3,6 +3,7 @@ package cs3500.animator.view;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import cs3500.animator.model.IAnimator;
 import cs3500.animator.model.instruction.Instruction;
@@ -13,15 +14,18 @@ import cs3500.animator.shapes.IShape;
  */
 public class SVGAnimatorView implements IAnimatorView {
   IAnimator model;
-  String fileName;
+  Writer writer;
+  double msPerTick;
 
   /**
    * Construct a new SVGAnimatorView
    * 
    * @param fileName the name of the generated SVG file
+   * @param msPerTick the number of milliseconds per tick in the animation
    */
-  public SVGAnimatorView(String fileName) {
-    this.fileName = fileName;
+  public SVGAnimatorView(BufferedWriter writer, double msPerTick) {
+    this.writer = writer;
+    this.msPerTick = msPerTick;
   }
 
   @Override
@@ -31,33 +35,108 @@ public class SVGAnimatorView implements IAnimatorView {
 
   @Override
   public void render() {
-    FileWriter fw;
-    try {
-      fw = new FileWriter(this.fileName + ".svg");
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Failure to open given file");
-    }
-    BufferedWriter writer = new BufferedWriter(fw);
     String toAppend =
         "<svg width=\"700\" height=\"500\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n";
 
     List<IShape> shapes = model.getShapes();
+
     for (IShape shape : shapes) {
+      List<Instruction> instructions = model.getInstructions(shape);
+      int[] startTick = instructions.get(0).getDescription();
+
       toAppend += "<";
       switch (shape.getType()) {
         case "Rectangle":
-          toAppend += "rect";
+          toAppend += "rect id=\"" + shape.getName() + "\" x=\"" + startTick[1] + "\" y=\""
+              + startTick[2] + "\" width=\"" + startTick[3] + "\" height=\"" + startTick[4]
+              + "\" fill=\"rgb(" + startTick[5] + "," + startTick[6] + "," + startTick[7]
+              + ")\" visibility=\"visible\" >\n";
           break;
         case "Ellipse":
-          toAppend += "ellipse";
+          toAppend += "ellipse id=\"" + shape.getName() + "\" cx=\"" + startTick[1] + "\" cy=\""
+              + startTick[2] + "\" rx=\"" + startTick[3] + "\" rx=\"" + startTick[4]
+              + "\" fill=\"rgb(" + startTick[5] + "," + startTick[6] + "," + startTick[7]
+              + ")\" visibility=\"visible\" >";
           break;
         default:
           throw new IllegalArgumentException("Invalid shape type: " + shape.getType());
       }
 
-      toAppend += " id=" + shape.getName() + " ";
-      List<Instruction> instructions = model.getInstructions(shape);
+      // Find values that change and write down that change (Color is handled separately as it's
+      // more complex)
+      for (int i = 0; i < instructions.size() - 1; i++) {
+        int[] start = instructions.get(i).getDescription();
+        int[] end = instructions.get(i + 1).getDescription();
+        for (int val = 1; val <= 4; val++) {
+          if (start[val] != end[val]) {
+            toAppend += "\n\t<animate attributeType=\"xml\" begin=\"" + start[0] * msPerTick
+                + "ms\" dur=\"" + (end[0] - start[0]) * msPerTick + "ms\" attributeName=\"";
+            toAppend += valName(shape, val) + "\" from=\"" + start[val] + "\" to=\"" + end[val]
+                + "\" fill=\"remove\" />";
+          }
+
+          // Color handling
+          if (start[5] != end[5] || start[6] != end[6] || start[7] != end[7]) {
+            toAppend +=
+                "\n\t<animate attributeType=\"xml\" begin=\"" + start[0] * msPerTick + "ms\" dur=\""
+                    + (end[0] - start[0]) * msPerTick + "ms\" attributeName=\"fill\" from=\"rgb("
+                    + start[5] + "," + start[6] + "," + start[7] + ")\" to=\"rgb(" + end[5] + ","
+                    + end[6] + "," + end[7] + ")\" fill=\"remove\" />";
+          }
+        }
+        switch (shape.getType()) {
+          case "Rectangle":
+            toAppend += "\n</rect>";
+            break;
+          case "Ellipse":
+            toAppend += "\n</ellipse>";
+        }
+      }
+      toAppend += "\n</svg>";
+      try {
+        writer.append(toAppend);
+        writer.flush();
+      } catch (IOException e) {
+        throw new IllegalArgumentException("Writer fail");
+      }
     }
   }
 
+  private String valName(IShape shape, int val) {
+    switch (val) {
+      case 1:
+        switch (shape.getType()) {
+          case "Rectangle":
+            return "x";
+          case "Ellipse":
+            return "cx";
+        }
+        break;
+      case 2:
+        switch (shape.getType()) {
+          case "Rectangle":
+            return "y";
+          case "Ellipse":
+            return "cy";
+        }
+        break;
+      case 3:
+        switch (shape.getType()) {
+          case "Rectangle":
+            return "width";
+          case "Ellipse":
+            return "rx";
+        }
+        break;
+      case 4:
+        switch (shape.getType()) {
+          case "Rectangle":
+            return "height";
+          case "Ellipse":
+            return "ry";
+        }
+        break;
+    }
+    throw new IllegalArgumentException("Bad shape or val");
+  }
 }
