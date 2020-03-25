@@ -14,14 +14,39 @@ public class Animator implements IAnimator {
   // The set of instructions indexed by the shape they act upon.
   // List of instructions is always chronological.
   Map<IShape, List<Instruction>> instructions;
+  private int top;
+  private int right;
+  private int width;
+  private int height;
 
   /**
    * Creates a new Animator class from preset lists of shapes and instructions.
    * 
    * @param instructions the instructions that act upon the shapes.
    */
-  public Animator(Map<IShape, List<Instruction>> instructions) {
+  public Animator(Map<IShape, List<Instruction>> instructions,
+                  int top, int right, int width, int height) {
     this.instructions = instructions;
+    this.top = top;
+    this.right = right;
+    this.width = width;
+    this.height = height;
+  }
+
+  public int getTop() {
+    return this.top;
+  }
+
+  public int getRight() {
+    return this.right;
+  }
+
+  public int getWidth() {
+    return this.width;
+  }
+
+  public int getHeight() {
+    return this.height;
   }
 
   /**
@@ -42,7 +67,8 @@ public class Animator implements IAnimator {
 
   @Override
   public String description() {
-    String description = "";
+    String description = "canvas " + this.top + " " + this.right
+            + " " + this.width + " " + this.height;
     for (IShape s : this.instructions.keySet()) {
       if (description.length() != 0) {
         description += "\n";
@@ -126,6 +152,7 @@ public class Animator implements IAnimator {
       if (check[0] > tick) {
         before = l.get(i - 1).getDescription();
         after = check;
+        break;
       } else if (check[0] == tick) {
         return check;
       }
