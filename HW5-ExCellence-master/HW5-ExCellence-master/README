@@ -1,0 +1,9 @@
+This is the model of a MVC implementation of an Animator.
+It has three main parts:
+	- Instruction:
+		- Holds all the data for a shape at a specific tick.
+	- Shape:
+		- Represents a shape in the final animation.
+	- Animator:
+		- Applies Instructions to Shapes in order and calculates what happens
+		  to the shape between Instructions.
