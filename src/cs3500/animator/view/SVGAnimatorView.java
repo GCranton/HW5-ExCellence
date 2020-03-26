@@ -1,7 +1,5 @@
 package cs3500.animator.view;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
@@ -13,20 +11,9 @@ import cs3500.animator.shapes.IShape;
  * View that displays an Animation via SVG
  */
 public class SVGAnimatorView implements IAnimatorView {
-  IAnimator model;
-  Writer writer;
-  double msPerTick;
-
-  /**
-   * Construct a new SVGAnimatorView
-   * 
-   * @param fileName the name of the generated SVG file
-   * @param msPerTick the number of milliseconds per tick in the animation
-   */
-  public SVGAnimatorView(BufferedWriter writer, double msPerTick) {
-    this.writer = writer;
-    this.msPerTick = msPerTick;
-  }
+  private IAnimator model;
+  private Writer writer;
+  private double msPerTick;
 
   @Override
   public void setAnimation(IAnimator model) {
@@ -35,8 +22,9 @@ public class SVGAnimatorView implements IAnimatorView {
 
   @Override
   public void render() {
-    String toAppend =
-        "<svg width=\"700\" height=\"500\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n\n";
+    String toAppend = "<svg width=\"" + (model.getWidth() + model.getRight()) + "\" height=\""
+        + (model.getHeight() + model.getTop())
+        + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">";
 
     List<IShape> shapes = model.getShapes();
 
@@ -44,7 +32,7 @@ public class SVGAnimatorView implements IAnimatorView {
       List<Instruction> instructions = model.getInstructions(shape);
       int[] startTick = instructions.get(0).getDescription();
 
-      toAppend += "<";
+      toAppend += "\n<";
       switch (shape.getType()) {
         case "Rectangle":
           toAppend += "rect id=\"" + shape.getName() + "\" x=\"" + startTick[1] + "\" y=\""
@@ -72,7 +60,7 @@ public class SVGAnimatorView implements IAnimatorView {
             toAppend += "\n\t<animate attributeType=\"xml\" begin=\"" + start[0] * msPerTick
                 + "ms\" dur=\"" + (end[0] - start[0]) * msPerTick + "ms\" attributeName=\"";
             toAppend += valName(shape, val) + "\" from=\"" + start[val] + "\" to=\"" + end[val]
-                + "\" fill=\"remove\" />";
+                + "\" fill=\"freeze\" />";
           }
 
           // Color handling
@@ -81,24 +69,24 @@ public class SVGAnimatorView implements IAnimatorView {
                 "\n\t<animate attributeType=\"xml\" begin=\"" + start[0] * msPerTick + "ms\" dur=\""
                     + (end[0] - start[0]) * msPerTick + "ms\" attributeName=\"fill\" from=\"rgb("
                     + start[5] + "," + start[6] + "," + start[7] + ")\" to=\"rgb(" + end[5] + ","
-                    + end[6] + "," + end[7] + ")\" fill=\"remove\" />";
+                    + end[6] + "," + end[7] + ")\" fill=\"freeze\" />";
           }
         }
-        switch (shape.getType()) {
-          case "Rectangle":
-            toAppend += "\n</rect>";
-            break;
-          case "Ellipse":
-            toAppend += "\n</ellipse>";
-        }
       }
-      toAppend += "\n</svg>";
-      try {
-        writer.append(toAppend);
-        writer.flush();
-      } catch (IOException e) {
-        throw new IllegalArgumentException("Writer fail");
+      switch (shape.getType()) {
+        case "Rectangle":
+          toAppend += "\n</rect>";
+          break;
+        case "Ellipse":
+          toAppend += "\n</ellipse>";
       }
+    }
+    toAppend += "\n</svg>";
+    try {
+      writer.append(toAppend);
+      writer.flush();
+    } catch (IOException e) {
+      throw new IllegalArgumentException("Writer fail");
     }
   }
 
@@ -138,5 +126,15 @@ public class SVGAnimatorView implements IAnimatorView {
         break;
     }
     throw new IllegalArgumentException("Bad shape or val");
+  }
+
+  @Override
+  public void setTime(int msPerTick) {
+    this.msPerTick = msPerTick;
+  }
+
+  @Override
+  public void setOutput(Writer output) {
+    this.writer = output;
   }
 }

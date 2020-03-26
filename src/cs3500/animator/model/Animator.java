@@ -24,8 +24,8 @@ public class Animator implements IAnimator {
    * 
    * @param instructions the instructions that act upon the shapes.
    */
-  public Animator(Map<IShape, List<Instruction>> instructions,
-                  int top, int right, int width, int height) {
+  public Animator(Map<IShape, List<Instruction>> instructions, int top, int right, int width,
+      int height) {
     this.instructions = instructions;
     this.top = top;
     this.right = right;
@@ -37,16 +37,32 @@ public class Animator implements IAnimator {
     return this.top;
   }
 
+  public void setTop(int y) {
+    this.top = y;
+  }
+
   public int getRight() {
     return this.right;
+  }
+
+  public void setRight(int x) {
+    this.right = x;
   }
 
   public int getWidth() {
     return this.width;
   }
 
+  public void setWidth(int width) {
+    this.width = width;
+  }
+
   public int getHeight() {
     return this.height;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
   }
 
   /**
@@ -67,8 +83,8 @@ public class Animator implements IAnimator {
 
   @Override
   public String description() {
-    String description = "canvas " + this.top + " " + this.right
-            + " " + this.width + " " + this.height;
+    String description =
+        "canvas " + this.top + " " + this.right + " " + this.width + " " + this.height;
     for (IShape s : this.instructions.keySet()) {
       if (description.length() != 0) {
         description += "\n";
@@ -200,4 +216,6 @@ public class Animator implements IAnimator {
     }
     return toReturn;
   }
+
+
 }

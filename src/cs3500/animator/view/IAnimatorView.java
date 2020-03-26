@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import java.io.Writer;
 import cs3500.animator.model.IAnimator;
 
 /**
@@ -12,7 +13,21 @@ public interface IAnimatorView {
    * @param model the model to display.
    */
   public void setAnimation(IAnimator model);
-  
+
+  /**
+   * Sets the amount of milliseconds each tick takes.
+   * 
+   * @param msPerTick the time
+   */
+  public void setTime(int msPerTick);
+
+  /**
+   * Sets the text output of the Animator.
+   * 
+   * @param output the Writer to output to
+   */
+  public void setOutput(Writer output);
+
   /**
    * Renders the whole animation into finished format.
    */

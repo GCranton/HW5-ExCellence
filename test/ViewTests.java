@@ -21,7 +21,9 @@ public class ViewTests {
       throw new IllegalArgumentException("Writer fail");
     }
     BufferedWriter writer = new BufferedWriter(fw);
-    IAnimatorView view = new SVGAnimatorView(writer, 10);
+    IAnimatorView view = new SVGAnimatorView();
+    view.setTime(10);
+    view.setOutput(writer);
     IShape testRect = new Rectangle("R");
     Instruction first = new Instruction(new int[] {0, 10, 10, 20, 10, 0, 0, 100});
     Instruction last = new Instruction(new int[] {1000, 50, 50, 20, 10, 100, 0, 50});

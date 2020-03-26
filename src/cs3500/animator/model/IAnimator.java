@@ -85,4 +85,20 @@ public interface IAnimator {
    * @return the list of instructions.
    */
   public List<Instruction> getInstructions(IShape shape);
+
+  public int getTop();
+
+  public void setTop(int y);
+
+  public int getRight();
+
+  public void setRight(int x);
+
+  public int getWidth();
+
+  public void setWidth(int width);
+
+  public int getHeight();
+
+  public void setHeight(int height);
 }

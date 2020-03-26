@@ -1,17 +1,15 @@
 package cs3500.animator.view;
 
-import cs3500.animator.model.Animator;
-import cs3500.animator.shapes.Ellipse;
+import cs3500.animator.model.IAnimator;
 import cs3500.animator.shapes.IShape;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class MyPanel extends JPanel {
-  Animator model;
+  IAnimator model;
   int currTick = 0;
 
-  public MyPanel(Animator model) {
+  public MyPanel(IAnimator model) {
     this.model = model;
   }
 
@@ -24,18 +22,16 @@ public class MyPanel extends JPanel {
         int[] currDescription = model.getDescriptionAt(shape, currTick);
         g.setColor(new Color(currDescription[5], currDescription[6], currDescription[7]));
         if (shape.getType().equals("Rectangle")) {
-          g.fillRect(currDescription[1], currDescription[2],
-                  currDescription[3], currDescription[4]);
-        }
-        else if (shape.getType().equals("Ellipse")) {
-          g.fillOval(currDescription[1], currDescription[2],
-                  currDescription[3], currDescription[4]);
+          g.fillRect(currDescription[1], currDescription[2], currDescription[3],
+              currDescription[4]);
+        } else if (shape.getType().equals("Ellipse")) {
+          g.fillOval(currDescription[1], currDescription[2], currDescription[3],
+              currDescription[4]);
         }
       }
 
     }
   }
-
 
 
 
