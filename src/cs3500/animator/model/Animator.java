@@ -66,15 +66,6 @@ public class Animator implements IAnimator {
   }
 
   /**
-   * Generates a new Animator from a textual description.
-   * 
-   * @param description the description of the animation.
-   */
-  public Animator(String description) {
-    // As user description is not part of this phase of the project, we won't implement this yet
-  }
-
-  /**
    * Creates an empty Animator.
    */
   public Animator() {

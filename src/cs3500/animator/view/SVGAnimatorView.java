@@ -22,9 +22,8 @@ public class SVGAnimatorView implements IAnimatorView {
 
   @Override
   public void render() {
-    String toAppend = "<svg width=\"" + (model.getWidth() + model.getRight()) + "\" height=\""
-        + (model.getHeight() + model.getTop())
-        + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">";
+    String toAppend = "<svg width=\"" + (model.getWidth()) + "\" height=\"" + (model.getHeight())
+        + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" overflow=\"scroll\">";
 
     List<IShape> shapes = model.getShapes();
 
@@ -38,11 +37,11 @@ public class SVGAnimatorView implements IAnimatorView {
           toAppend += "rect id=\"" + shape.getName() + "\" x=\"" + startTick[1] + "\" y=\""
               + startTick[2] + "\" width=\"" + startTick[3] + "\" height=\"" + startTick[4]
               + "\" fill=\"rgb(" + startTick[5] + "," + startTick[6] + "," + startTick[7]
-              + ")\" visibility=\"visible\" >\n";
+              + ")\" visibility=\"visible\" >";
           break;
         case "Ellipse":
           toAppend += "ellipse id=\"" + shape.getName() + "\" cx=\"" + startTick[1] + "\" cy=\""
-              + startTick[2] + "\" rx=\"" + startTick[3] + "\" rx=\"" + startTick[4]
+              + startTick[2] + "\" rx=\"" + startTick[3] + "\" ry=\"" + startTick[4]
               + "\" fill=\"rgb(" + startTick[5] + "," + startTick[6] + "," + startTick[7]
               + ")\" visibility=\"visible\" >";
           break;
@@ -62,15 +61,14 @@ public class SVGAnimatorView implements IAnimatorView {
             toAppend += valName(shape, val) + "\" from=\"" + start[val] + "\" to=\"" + end[val]
                 + "\" fill=\"freeze\" />";
           }
-
-          // Color handling
-          if (start[5] != end[5] || start[6] != end[6] || start[7] != end[7]) {
-            toAppend +=
-                "\n\t<animate attributeType=\"xml\" begin=\"" + start[0] * msPerTick + "ms\" dur=\""
-                    + (end[0] - start[0]) * msPerTick + "ms\" attributeName=\"fill\" from=\"rgb("
-                    + start[5] + "," + start[6] + "," + start[7] + ")\" to=\"rgb(" + end[5] + ","
-                    + end[6] + "," + end[7] + ")\" fill=\"freeze\" />";
-          }
+        }
+        // Color handling
+        if (start[5] != end[5] || start[6] != end[6] || start[7] != end[7]) {
+          toAppend +=
+              "\n\t<animate attributeType=\"xml\" begin=\"" + start[0] * msPerTick + "ms\" dur=\""
+                  + (end[0] - start[0]) * msPerTick + "ms\" attributeName=\"fill\" from=\"rgb("
+                  + start[5] + "," + start[6] + "," + start[7] + ")\" to=\"rgb(" + end[5] + ","
+                  + end[6] + "," + end[7] + ")\" fill=\"freeze\" />";
         }
       }
       switch (shape.getType()) {
