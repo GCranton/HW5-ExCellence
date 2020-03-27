@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import cs3500.animator.model.Animator;
 import cs3500.animator.model.IAnimator;
 import cs3500.animator.view.AnimationBuilder;
 import cs3500.animator.view.AnimationReader;

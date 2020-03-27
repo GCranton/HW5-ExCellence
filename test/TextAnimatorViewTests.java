@@ -1,18 +1,11 @@
 import cs3500.animator.model.Animator;
 import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.Ellipse;
-import cs3500.animator.shapes.IShape;
 import cs3500.animator.shapes.Rectangle;
 import cs3500.animator.view.TextAnimatorView;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.io.StringWriter;
-import java.util.List;
-import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**

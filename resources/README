@@ -1,0 +1,20 @@
+This is an Animator
+
+The model is IAnimator and Animator
+It has three main parts:
+	- Instruction:
+		- Holds all the data for a shape at a specific tick.
+	- Shape:
+		- Represents a shape in the final animation.
+	- Animator:
+		- Applies Instructions to Shapes in order and calculates what happens
+		  to the shape between Instructions.
+
+The View is IAnimator
+There are three views:
+        - SVGAnimatorView
+		- Renders the animation in SVG format
+	- TextAnimatorView
+		- Describes the animation in text
+	- VideoAnimatorView
+		- Uses swing to render the animation

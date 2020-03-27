@@ -12,6 +12,7 @@ import java.awt.Color;
  * Specialized JPanel class used to animate Animators in VideoAnimatorView.
  * currTick keeps track of the tick that is being animated.
  */
+@SuppressWarnings("serial")
 public class MyPanel extends JPanel {
   Animator model;
   int currTick = 0;
