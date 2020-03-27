@@ -1,4 +1,3 @@
-import cs3500.animator.model.Animator;
 import cs3500.animator.shapes.IShape;
 import cs3500.animator.view.AnimatorBuilderImp;
 import org.junit.Test;
@@ -6,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests for AnimatorBuilderImp
+ * Tests for AnimatorBuilderImp.
  */
 public class AnimatorBuilderImpTests {
 
@@ -31,7 +30,7 @@ public class AnimatorBuilderImpTests {
     assertEquals(i.build().getHeight(), 4);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testIllegalSetBounds() {
     AnimatorBuilderImp i = new AnimatorBuilderImp();
     i.setBounds(1, 2, -3, -4);
@@ -46,7 +45,7 @@ public class AnimatorBuilderImpTests {
     assertEquals(i.build().getShapes().size(), 2);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testDeclareIllegalShape() {
     AnimatorBuilderImp i = new AnimatorBuilderImp();
     i.declareShape("triangles are yucky", "triangle");
@@ -64,7 +63,7 @@ public class AnimatorBuilderImpTests {
     assertEquals(i.build().getInstructions(rect).get(1).getDescription()[0], 9);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testAddIllegalMotion() {
     AnimatorBuilderImp i = new AnimatorBuilderImp();
     i.declareShape("rect", "rectangle");
