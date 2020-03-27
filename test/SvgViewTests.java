@@ -14,6 +14,9 @@ import cs3500.animator.shapes.Rectangle;
 import cs3500.animator.view.IAnimatorView;
 import cs3500.animator.view.SVGAnimatorView;
 
+/**
+ * Test class for the SVG view.
+ */
 public class SvgViewTests {
   @Test
   public void testRenderRect() {
@@ -69,5 +72,11 @@ public class SvgViewTests {
             + "\n\t<animate attributeType=\"xml\" begin=\"0.0ms\" dur=\"10000.0ms\" attributeName=\"fill\" from=\"rgb(0,0,100)\" to=\"rgb(100,0,50)\" fill=\"freeze\" />"
             + "\n</ellipse>" + "\n</svg>";
     assertEquals(expected, fw.toString());
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testNullRender() {
+    IAnimatorView view = new SVGAnimatorView();
+    view.render();
   }
 }

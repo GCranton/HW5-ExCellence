@@ -8,12 +8,21 @@ import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
 
 /**
- * View that displays an Animation via SVG
+ * View that displays an Animation via SVG.
  */
 public class SVGAnimatorView implements IAnimatorView {
   private IAnimator model;
   private Writer writer;
   private double msPerTick;
+
+  /**
+   * Default constructor for the view. Initializes everything to null values to be set later.
+   */
+  public SVGAnimatorView() {
+    this.model = null;
+    this.writer = null;
+    this.msPerTick = 0.0;
+  }
 
   @Override
   public void setAnimation(IAnimator model) {
@@ -22,6 +31,11 @@ public class SVGAnimatorView implements IAnimatorView {
 
   @Override
   public void render() {
+    if (model == null || writer == null || msPerTick == 0) {
+      throw new IllegalStateException(
+          "Must set model, writer, and tick time to non-null values before rendering.");
+    }
+
     String toAppend = "<svg width=\"" + (model.getWidth()) + "\" height=\"" + (model.getHeight())
         + "\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" overflow=\"scroll\">";
 

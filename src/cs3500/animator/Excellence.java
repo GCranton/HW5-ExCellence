@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import cs3500.animator.model.Animator;
 import cs3500.animator.model.IAnimator;
+import cs3500.animator.view.AnimationBuilder;
 import cs3500.animator.view.AnimationReader;
 import cs3500.animator.view.AnimatorBuilderImp;
 import cs3500.animator.view.IAnimatorView;
@@ -14,8 +16,16 @@ import cs3500.animator.view.SVGAnimatorView;
 import cs3500.animator.view.TextAnimatorView;
 import cs3500.animator.view.VideoAnimatorView;
 
+/**
+ * Main class for the Excellence project.
+ */
 public class Excellence {
 
+  /**
+   * Main method for the Excellence Project.
+   * 
+   * @param args the command-line arguments to the program.
+   */
   public static void main(String[] args) {
     IAnimator model = null;
     IAnimatorView view = null;
@@ -34,7 +44,7 @@ public class Excellence {
           } catch (FileNotFoundException e1) {
             throw new IllegalArgumentException("Invalid infile: " + second);
           }
-          AnimatorBuilderImp builder = new AnimatorBuilderImp();
+          AnimationBuilder<IAnimator> builder = new AnimatorBuilderImp();
           model = AnimationReader.parseFile(readable, builder);
           break;
         case "-view":
