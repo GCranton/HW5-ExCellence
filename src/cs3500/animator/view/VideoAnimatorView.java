@@ -6,8 +6,9 @@ import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
 import cs3500.animator.shapes.Rectangle;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
 
 /**
  * VideoAnimatorView animates the Animator in a JFrame.
@@ -34,7 +35,7 @@ public class VideoAnimatorView implements IAnimatorView {
         finalTime = lastTime;
       }
     }
-    JScrollPane scrollBar=new JScrollPane(p,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+    JScrollPane scrollBar = new JScrollPane(p, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
             JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     frame.add(scrollBar, BorderLayout.CENTER);
     frame.setVisible(true);
@@ -44,15 +45,13 @@ public class VideoAnimatorView implements IAnimatorView {
       p.currTick = i;
       try{
         Thread.sleep(1000);
-      }
-      catch (Exception e) {
-
+      } catch (InterruptedException ie) {
+        ie.printStackTrace();
       }
       //idk why this works but otherwise the code repaints again
       if (i == finalTime) {
         break;
-      }
-      else{
+      } else {
         p.repaint();
       }
 

@@ -1,11 +1,12 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.Animator;
-import cs3500.animator.shapes.Ellipse;
 import cs3500.animator.shapes.IShape;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Color;
+
 
 /**
  * Specialized JPanel class used to animate Animators in VideoAnimatorView.

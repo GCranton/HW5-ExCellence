@@ -1,12 +1,7 @@
 package cs3500.animator.view;
 
-import cs3500.animator.model.Animator;
 import cs3500.animator.model.IAnimator;
-import cs3500.animator.model.instruction.Instruction;
-import cs3500.animator.shapes.IShape;
 
-import java.io.File;
-import java.io.FileReader;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -90,14 +85,14 @@ public class AnimationReader {
 
   private static <Doc> void readMotion(Scanner s, AnimationBuilder<IAnimator> builder) {
     String[] fieldNames = new String[]{
-            "initial time",
-            "initial x-coordinate", "initial y-coordinate",
-            "initial width", "initial height",
-            "initial red value", "initial green value", "initial blue value",
-            "final time",
-            "final x-coordinate", "final y-coordinate",
-            "final width", "final height",
-            "final red value", "final green value", "final blue value",
+      "initial time",
+      "initial x-coordinate", "initial y-coordinate",
+      "initial width", "initial height",
+      "initial red value", "initial green value", "initial blue value",
+      "final time",
+      "final x-coordinate", "final y-coordinate",
+      "final width", "final height",
+      "final red value", "final green value", "final blue value",
     };
     int[] vals = new int[16];
     String name;
@@ -110,7 +105,7 @@ public class AnimationReader {
       vals[i] = getInt(s, "Motion", fieldNames[i]);
     }
     builder.addMotion(name,
-            vals[0], vals[1], vals[2 ], vals[3 ], vals[4 ], vals[5 ], vals[6 ], vals[7 ],
+            vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6], vals[7],
             vals[8], vals[9], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15]);
   }
 

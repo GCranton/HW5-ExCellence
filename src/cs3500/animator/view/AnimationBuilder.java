@@ -1,5 +1,9 @@
 package cs3500.animator.view;
 
+/**
+ * AnimationBuilder is used to create an Animator from an AnimationReader
+ * @param <Doc> is "Animator" in AnimatorBuilderImp
+ */
 public interface AnimationBuilder<Doc> {
   /**
    * Constructs a final document.

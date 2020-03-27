@@ -1,10 +1,11 @@
 package cs3500.animator.view;
 
 import cs3500.animator.model.IAnimator;
+
 /**
  * TextAnimatorView prints out the description of the Animator.
  */
-public class TextAnimatorView implements IAnimatorView{
+public class TextAnimatorView implements IAnimatorView {
 
   private IAnimator model;
 
@@ -15,10 +16,9 @@ public class TextAnimatorView implements IAnimatorView{
 
   @Override
   public void render() {
-    if (model == null){
+    if (model == null) {
       System.out.println("No animation set yet");
-    }
-    else {
+    } else {
       System.out.println(model.description());
     }
   }
