@@ -5,18 +5,20 @@ import cs3500.animator.model.IAnimator;
 import cs3500.animator.model.instruction.Instruction;
 import cs3500.animator.shapes.IShape;
 import cs3500.animator.shapes.Rectangle;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.Writer;
 
+/**
+ * VideoAnimatorView animates the Animator in a JFrame.
+ */
 public class VideoAnimatorView implements IAnimatorView {
 
-  IAnimator model;
-  int tickTime;
+  Animator model;
 
   @Override
   public void setAnimation(IAnimator model) {
-    this.model = model;
+    this.model = (Animator) model;
   }
 
   @Override
@@ -27,27 +29,30 @@ public class VideoAnimatorView implements IAnimatorView {
     MyPanel p = new MyPanel(this.model);
     int finalTime = 0;
     for (IShape s : model.getShapes()) {
-      int lastTime =
-          model.getInstructions(s).get(model.getInstructions(s).size() - 1).getDescription()[0];
+      int lastTime = model.getInstructions(s).get(model.getInstructions(s).size() - 1).getDescription()[0];
       if (lastTime > finalTime) {
         finalTime = lastTime;
       }
     }
-    frame.add(p, BorderLayout.CENTER);
+    JScrollPane scrollBar=new JScrollPane(p,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    frame.add(scrollBar, BorderLayout.CENTER);
     frame.setVisible(true);
     frame.setResizable(false);
-    frame.setSize(300, 300);
+    frame.setSize(model.getWidth(), model.getHeight());
     for (int i = 0; i <= finalTime; i++) {
       p.currTick = i;
-      try {
-        Thread.sleep(tickTime);
-      } catch (Exception e) {
+      try{
+        Thread.sleep(1000);
+      }
+      catch (Exception e) {
 
       }
-      // idk why this works but otherwise the code repaints again
+      //idk why this works but otherwise the code repaints again
       if (i == finalTime) {
         break;
-      } else {
+      }
+      else{
         p.repaint();
       }
 
@@ -61,20 +66,10 @@ public class VideoAnimatorView implements IAnimatorView {
     Animator a = new Animator();
     Rectangle r = new Rectangle("a");
     a.addShape(r);
-    a.addInstruction(r, new Instruction(new int[] {0, 100, 100, 75, 80, 0, 0, 0}));
-    a.addInstruction(r, new Instruction(new int[] {5, 100, 100, 75, 100, 0, 0, 200}));
-    a.addInstruction(r, new Instruction(new int[] {10, 100, 100, 75, 150, 0, 0, 255}));
+    a.addInstruction(r, new Instruction(new int[]{0, 100, 100, 75, 80, 0, 0, 0}));
+    a.addInstruction(r, new Instruction(new int[]{5, 100, 100, 75, 100, 0, 0, 200}));
+    a.addInstruction(r, new Instruction(new int[]{10, 100, 100, 75, 150, 0, 0, 255}));
     v.setAnimation(a);
     v.render();
-  }
-
-  @Override
-  public void setTime(int msPerTick) {
-    this.tickTime = msPerTick;
-  }
-
-  @Override
-  public void setOutput(Writer output) {
-    // Stub: no need for a text output on the video animator
   }
 }
