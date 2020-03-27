@@ -86,10 +86,25 @@ public interface IAnimator {
    */
   public List<Instruction> getInstructions(IShape shape);
 
+  /**
+   * Get the value of the top of the window.
+   * 
+   * @return the y coord at the top.
+   */
   public int getTop();
 
+  /**
+   * Set the y value of the top of the window.
+   * 
+   * @param y the y val.
+   */
   public void setTop(int y);
 
+  /**
+   * Get the x value of the right of the screen.
+   * 
+   * @return the x value of the right.
+   */
   public int getRight();
 
   public void setRight(int x);
