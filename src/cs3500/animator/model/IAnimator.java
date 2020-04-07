@@ -64,12 +64,30 @@ public interface IAnimator {
   public void addInstruction(IShape mod, Instruction newInst);
 
   /**
+   * A version of AddInstruction that generates the new Instruction instead of taking it in.
+   * 
+   * @param mod the shape to add the new Instruction to.
+   * @param tick the tick to insert the instruction at
+   */
+  public void addInstruction(IShape mod, int tick);
+
+  /**
    * Removes the instruction at the given shape's index from the animation.
    * 
    * @param mod the shape to modify.
    * @param index the index of the Instruction to remove.
    */
   public void removeInstruction(IShape mod, int index);
+
+  /**
+   * Changes the instruction at the given shape's index to the new set of values.
+   * 
+   * @param mod the shape to modify.
+   * @param instrIndex the index of the Instruction to modify.
+   * @param descIndex the index of the specific description to change.
+   * @param newVal the new value to change the Instruction to.
+   */
+  public void editInstruction(IShape mod, int instrIndex, int descIndex, int newVal);
 
   /**
    * Gets the list of shapes in the animation.

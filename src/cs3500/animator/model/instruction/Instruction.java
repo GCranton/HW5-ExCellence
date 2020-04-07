@@ -63,4 +63,18 @@ public class Instruction {
     this.description = description;
   }
 
+  /**
+   * Changes the value of a single description.
+   * 
+   * @param index the index of the description to change.
+   * @param newVal the new value of that description.
+   */
+  public void changeValue(int index, int newVal) {
+    try {
+      description[index] = newVal;
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException("Bad index: " + index);
+    }
+  }
+
 }

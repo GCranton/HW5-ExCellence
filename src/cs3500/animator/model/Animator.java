@@ -136,6 +136,7 @@ public class Animator implements IAnimator {
     }
   }
 
+
   @Override
   public void removeShape(IShape toRemove) {
     this.instructions.remove(toRemove);
@@ -181,6 +182,12 @@ public class Animator implements IAnimator {
   }
 
   @Override
+  public void addInstruction(IShape mod, int tick) {
+    Instruction newInst = new Instruction(this.getDescriptionAt(mod, tick));
+    this.addInstruction(mod, newInst);
+  }
+
+  @Override
   public void removeInstruction(IShape mod, int index) {
     if (this.instructions.containsKey(mod)) {
       this.instructions.get(mod).remove(index);
@@ -188,6 +195,11 @@ public class Animator implements IAnimator {
       throw new IllegalArgumentException("Shape not found");
     }
 
+  }
+
+  @Override
+  public void editInstruction(IShape mod, int instrIndex, int descIndex, int newVal) {
+    instructions.get(mod).get(instrIndex).changeValue(descIndex, newVal);
   }
 
   @Override
@@ -207,6 +219,5 @@ public class Animator implements IAnimator {
     }
     return toReturn;
   }
-
 
 }
