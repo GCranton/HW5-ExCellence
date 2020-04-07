@@ -91,6 +91,8 @@ public class SVGAnimatorView implements IAnimatorView {
           break;
         case "Ellipse":
           toAppend += "\n</ellipse>";
+        default:
+          throw new IllegalArgumentException("Invalid shape type: " + shape.getType());
       }
     }
     toAppend += "\n</svg>";
@@ -110,32 +112,36 @@ public class SVGAnimatorView implements IAnimatorView {
             return "x";
           case "Ellipse":
             return "cx";
+          default:
+            throw new IllegalArgumentException("Invalid shape type: " + shape.getType());
         }
-        break;
       case 2:
         switch (shape.getType()) {
           case "Rectangle":
             return "y";
           case "Ellipse":
             return "cy";
+          default:
+            throw new IllegalArgumentException("Invalid shape type: " + shape.getType());
         }
-        break;
       case 3:
         switch (shape.getType()) {
           case "Rectangle":
             return "width";
           case "Ellipse":
             return "rx";
+          default:
+            throw new IllegalArgumentException("Invalid shape type: " + shape.getType());
         }
-        break;
       case 4:
         switch (shape.getType()) {
           case "Rectangle":
             return "height";
           case "Ellipse":
             return "ry";
+          default:
+            throw new IllegalArgumentException("Invalid shape type: " + shape.getType());
         }
-        break;
     }
     throw new IllegalArgumentException("Bad shape or val");
   }
